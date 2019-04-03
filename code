@@ -1,10 +1,13 @@
+library(jsonlite)
+library(fplscrapR)
+
 n <- 10000
 
 my_ids <- data.frame()
 
 for (i in 1:(n/50)){
 
-  ids <- jsonlite::fromJSON(paste("https://fantasy.premierleague.com/drf/leagues-classic-standings/313?phase=1&le-page=1&ls-page=",i,sep=""))$standings$results$entry
+  ids <- fromJSON(paste("https://fantasy.premierleague.com/drf/leagues-classic-standings/313?phase=1&le-page=1&ls-page=",i,sep=""))$standings$results$entry
   
   my_ids <- rbind(my_ids,data.frame(ids,page=i))
 }
@@ -23,3 +26,5 @@ for (i in 1:length(my_ids$ids)){
   print(i)
   
 }
+
+head(total_list)
