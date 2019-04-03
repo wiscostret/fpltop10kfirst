@@ -1,3 +1,5 @@
+Simply script with loop to grab the 'first season' played for the top 10000 players in FPL:
+
 library(jsonlite)
 library(fplscrapR)
 
