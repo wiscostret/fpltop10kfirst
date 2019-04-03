@@ -1,0 +1,25 @@
+n <- 10000
+
+my_ids <- data.frame()
+
+for (i in 1:(n/50)){
+
+  ids <- jsonlite::fromJSON(paste("https://fantasy.premierleague.com/drf/leagues-classic-standings/313?phase=1&le-page=1&ls-page=",i,sep=""))$standings$results$entry
+  
+  my_ids <- rbind(my_ids,data.frame(ids,page=i))
+}
+
+total_list <- data.frame()
+
+for (i in 1:length(my_ids$ids)){
+
+  ifelse(
+    tryCatch(get_entry_hist(my_ids$ids[i]),error = function(e) paste("NOPE")) == "NOPE",
+    first_season <- "2018/19",
+    first_season <- get_entry_hist(my_ids$ids[i])$season_name[1])
+    
+  total_list <- rbind(total_list,data.frame(entry=my_ids$ids[i],first=first_season))
+
+  print(i)
+  
+}
